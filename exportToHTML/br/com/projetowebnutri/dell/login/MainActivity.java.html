@@ -1,0 +1,116 @@
+<html>
+<head>
+<title>MainActivity.java</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.ln { color: rgb(0,0,0); font-weight: normal; font-style: normal; }
+.s0 { color: rgb(0,0,128); font-weight: bold; }
+.s1 { }
+.s2 { color: rgb(128,128,128); font-style: italic; }
+.s3 { color: rgb(0,128,0); font-weight: bold; }
+</style>
+</head>
+<BODY BGCOLOR="#ffffff">
+<TABLE CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#C0C0C0" >
+<TR><TD><CENTER>
+<FONT FACE="Arial, Helvetica" COLOR="#000000">
+MainActivity.java</FONT>
+</center></TD></TR></TABLE>
+<pre>
+
+<span class="s0">package </span><span class="s1">br.com.projetowebnutri.dell.login; 
+ 
+ 
+</span><span class="s2">//http://android-emotions.com/create-a-login-and-registration-form-in-android-using-sqlite-database/</span><span class="s1"> 
+ 
+</span><span class="s0">import </span><span class="s1">android.os.Bundle; 
+</span><span class="s0">import </span><span class="s1">android.support.design.widget.FloatingActionButton; 
+</span><span class="s0">import </span><span class="s1">android.support.design.widget.Snackbar; 
+</span><span class="s0">import </span><span class="s1">android.support.v7.app.AppCompatActivity; 
+</span><span class="s0">import </span><span class="s1">android.support.v7.widget.Toolbar; 
+</span><span class="s0">import </span><span class="s1">android.view.View; 
+</span><span class="s0">import </span><span class="s1">android.view.Menu; 
+</span><span class="s0">import </span><span class="s1">android.view.MenuItem; 
+</span><span class="s0">import </span><span class="s1">android.app.Activity; 
+</span><span class="s0">import </span><span class="s1">android.app.Dialog; 
+</span><span class="s0">import </span><span class="s1">android.content.Intent; 
+</span><span class="s0">import </span><span class="s1">android.os.Bundle; 
+</span><span class="s0">import </span><span class="s1">android.view.View; 
+</span><span class="s0">import </span><span class="s1">android.widget.Button; 
+</span><span class="s0">import </span><span class="s1">android.widget.EditText; 
+</span><span class="s0">import </span><span class="s1">android.widget.Toast; 
+ 
+</span><span class="s0">public class </span><span class="s1">MainActivity </span><span class="s0">extends </span><span class="s1">AppCompatActivity { 
+ 
+    Button btnSignIn, btnSignUp; 
+    LoginDataBaseAdapter loginDataBaseAdapter; 
+ 
+    @Override 
+    </span><span class="s0">protected void </span><span class="s1">onCreate(Bundle savedInstanceState) { 
+        </span><span class="s0">super</span><span class="s1">.onCreate(savedInstanceState); 
+        setContentView(R.layout.activity_main); 
+ 
+        loginDataBaseAdapter = </span><span class="s0">new </span><span class="s1">LoginDataBaseAdapter(</span><span class="s0">this</span><span class="s1">); 
+        loginDataBaseAdapter = loginDataBaseAdapter.open(); 
+ 
+        btnSignIn = (Button) findViewById(R.id.buttonSignIN); 
+        btnSignUp = (Button) findViewById(R.id.buttonSignUP); 
+ 
+        btnSignUp.setOnClickListener(</span><span class="s0">new </span><span class="s1">View.OnClickListener() { 
+            </span><span class="s0">public void </span><span class="s1">onClick(View v) { 
+                </span><span class="s2">// TODO Auto-generated method stub</span><span class="s1"> 
+ 
+                Intent intentSignUP = </span><span class="s0">new </span><span class="s1">Intent(getApplicationContext(), 
+                        CadastrarUPActivity.</span><span class="s0">class</span><span class="s1">); 
+                startActivity(intentSignUP); 
+            } 
+        }); 
+    } 
+ 
+    </span><span class="s0">public void </span><span class="s1">signIn(View V) { 
+        </span><span class="s0">final </span><span class="s1">Dialog dialog = </span><span class="s0">new </span><span class="s1">Dialog(MainActivity.</span><span class="s0">this</span><span class="s1">); 
+        dialog.setContentView(R.layout.telal_login); 
+        dialog.setTitle(</span><span class="s3">&quot;Login&quot;</span><span class="s1">); 
+        </span><span class="s0">final </span><span class="s1">EditText editTextUserName = (EditText) dialog 
+                .findViewById(R.id.editTextUserNameToLogin); 
+        </span><span class="s0">final </span><span class="s1">EditText editTextPassword = (EditText) dialog 
+                .findViewById(R.id.editTextPasswordToLogin); 
+ 
+        Button btnSignIn = (Button) dialog.findViewById(R.id.buttonSignIn); 
+ 
+        btnSignIn.setOnClickListener(</span><span class="s0">new </span><span class="s1">View.OnClickListener() { 
+ 
+            </span><span class="s0">public void </span><span class="s1">onClick(View v) { 
+ 
+                String userName = editTextUserName.getText().toString(); 
+                String password = editTextPassword.getText().toString(); 
+                String storedPassword = loginDataBaseAdapter 
+                        .getSinlgeEntry(userName); 
+                </span><span class="s0">if </span><span class="s1">(password.equals(storedPassword)) { 
+                    Toast.makeText(MainActivity.</span><span class="s0">this</span><span class="s1">, 
+                            </span><span class="s3">&quot;Congrats: Login Successfull&quot;</span><span class="s1">, Toast.LENGTH_LONG) 
+                            .show(); 
+                    dialog.dismiss(); 
+                    Intent main = </span><span class="s0">new </span><span class="s1">Intent(MainActivity.</span><span class="s0">this</span><span class="s1">, Welcome.</span><span class="s0">class</span><span class="s1">); 
+                    startActivity(main); 
+                } </span><span class="s0">else </span><span class="s1">{ 
+                    Toast.makeText(MainActivity.</span><span class="s0">this</span><span class="s1">, 
+                            </span><span class="s3">&quot;User Name or Password does not match&quot;</span><span class="s1">, 
+                            Toast.LENGTH_LONG).show(); 
+                } 
+            } 
+        }); 
+ 
+        dialog.show(); 
+    } 
+ 
+    @Override 
+    </span><span class="s0">protected void </span><span class="s1">onDestroy() { 
+        </span><span class="s0">super</span><span class="s1">.onDestroy(); 
+        loginDataBaseAdapter.close(); 
+    } 
+ 
+} 
+</span></pre>
+</body>
+</html>
